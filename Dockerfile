@@ -15,10 +15,10 @@ RUN apt-get  install -y git gcc g++ pkg-config libssl-dev libdbus-1-dev \
 #install prerequisties rpi4 
 RUN apt-get  install -y pi-bluetooth avahi-utils
 
-COPY out/debug/chip-tool /usr/bin/
+COPY out/debug/chip-tool-debug /usr/bin/
 COPY entrypoint.sh /
 
 ENTRYPOINT ["/entrypoint.sh", "tool"]
 
 #Set working directory
-#WORKDIR /home/connectedhomei
+#WORKDIR /home/connectedhomeip
