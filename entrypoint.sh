@@ -3,6 +3,7 @@
 service dbus start
 sleep 1
 service avahi-daemon start
+cd /
 /usr/sbin/otbr-agent -I wpan0 spinel+hdlc+uart:///dev/ttyACM0?uart-baudrate=1000000 &
 sleep 1
 ot-ctl panid 0x1234
