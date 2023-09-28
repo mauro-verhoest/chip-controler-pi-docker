@@ -8,7 +8,8 @@ This repo contains a Dockerfile to run the chip-tool on an arm64v8 ubuntu server
 
 
 # **usage: build**
-docker build -t matter-controller-pi .
+docker build -t matter-controller-pi --platform=linux/arm/v8 .
+
 
 # **usage: run**
 docker run -it matter-controller-pi
