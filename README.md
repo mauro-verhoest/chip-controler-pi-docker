@@ -12,6 +12,7 @@ docker build -t matter-controller-pi --platform=linux/arm/v8 .
 
 
 # **usage: run**
+sudo killall -9 bluetoothd
 docker run -it matter-controller-pi
 
 # **usage : push**
