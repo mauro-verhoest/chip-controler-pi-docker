@@ -24,7 +24,7 @@ RUN wget https://github.com/nrfconnect/sdk-connectedhomeip/releases/download/v2.
 RUN unzip chip-tool-linux_aarch64.zip
 
 #disable bluetooth 
-RUN  killall -9 bluetoothd
+#RUN  killall -9 bluetoothd
 
 COPY out/debug/chip-tool-debug /usr/bin/
 COPY entrypoint.sh /
