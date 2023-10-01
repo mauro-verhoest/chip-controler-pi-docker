@@ -36,7 +36,7 @@ services:
      dns:
        - 127.0.0.1
      privileged: true
-     stdin_open: true
+     #stdin_open: true
      tty: true
      command: ["--radio-url", "spinel+hdlc+uart:///dev/radio?uart-baudrate=1000000"]
      networks:
@@ -50,4 +50,4 @@ networks:
       driver: default
       config:
         - subnet: 2001:3984:3989::/64
-        - gateway: 2001:3984:3989::1
+          gateway: 2001:3984:3989::1
