@@ -1,0 +1,53 @@
+version: "3.9"
+
+volumes:
+  avahi-socket-dir: {}
+
+services:
+  chip-tool:
+    build: .
+    container_name: chip-tool
+    volumes:
+      - /var/run/dbus:/var/run/dbus
+      - /var/run/avahi-daemon/socket:/var/run/avahi-daemon/socket
+    privileged: true
+    #network_mode: otbr
+    #https://stackoverflow.com/questions/42593396/docker-compose-up-is-starting-the-container-and-immediately-stopping-them
+    tty: true
+    devices:
+    #https://stackoverflow.com/questions/53455982/mapping-all-available-devices-in-docker-compose
+      - "/dev/vcio:/dev/vcio"
+    networks:
+      ipv6net:
+        ipv6_address: 2001:3984:3989::21
+    
+  openthread_border_router:
+     image: nrfconnect/otbr:9185bda
+     container_name: otbr
+     volumes:
+       - /dev/ttyACM0:/dev/radio
+       - /var/run/avahi-daemon/socket:/var/run/avahi-daemon/socket
+     sysctls:
+       net.ipv6.conf.all.disable_ipv6: 0
+       net.ipv4.conf.all.forwarding: 1
+       net.ipv6.conf.all.forwarding: 1
+     ports:
+       - 8080:80
+     dns:
+       - 127.0.0.1
+     privileged: true
+     stdin_open: true
+     tty: true
+     command: ["--radio-url", "spinel+hdlc+uart:///dev/radio?uart-baudrate=1000000"]
+     networks:
+      ipv6net:
+        ipv6_address: 2001:3984:3989::20
+networks:
+  ipv6net:
+    driver: bridge
+    enable_ipv6: true
+    ipam:
+      driver: default
+      config:
+        - subnet: 2001:3984:3989::/64
+        - gateway: 2001:3984:3989::1
